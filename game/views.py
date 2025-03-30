@@ -143,6 +143,11 @@ def vote(request, code, round_id):
                 player=player,
                 guess=form.cleaned_data['guess'] == "True"
             )
+            channel_layer = get_channel_layer()
+            async_to_sync(channel_layer.group_send)(
+                f"round_{round.id}",
+                {"type": "votes_updated"}
+            )
             return render(request, "game/waiting_votes.html", {"game": game, "round": round})
     else:
         form = VoteForm()

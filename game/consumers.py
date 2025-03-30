@@ -46,3 +46,23 @@ class LobbyConsumer(AsyncWebsocketConsumer):
             'action': 'statement_submitted',
             'round_id': event['round_id']
         }))
+
+    async def votes_updated(self, event):
+        await self.send(text_data=json.dumps({"action": "votes_updated"}))
+
+class RoundConsumer(AsyncWebsocketConsumer):
+
+    async def connect(self):
+        self.round_id = self.scope['url_route']['kwargs']['round_id']
+        self.room_group_name = f'round_{self.round_id}'
+        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
+
+    async def votes_updated(self, event):
+        await self.send(text_data=json.dumps({
+            'type': 'votes_updated',
+            'round_id': self.round_id
+        }))

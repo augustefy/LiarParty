@@ -14,8 +14,52 @@
             <p class="text-red-600 font-semibold">La majorité a deviné correctement !</p>
         {% endif %}
 
-        <a href="{% url 'submit_statement' game.code %}" 
-           class="inline-block bg-emerald-600 text-white px-4 py-2 rounded-xl hover:bg-emerald-700 transition">Tour suivant</a>
+        <button id="nextRoundButton" class="inline-block bg-emerald-600 text-white px-4 py-2 rounded-xl hover:bg-emerald-700 transition">
+            Tour suivant
+        </button>
     </div>
 </div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const player_id = urlParams.get('player_id');
+    const pathParts = window.location.pathname.split('/');
+    const game_code = pathParts[2];   // /game/<game_code>/
+    const round_id = pathParts[4];    // /round/<round_id>/
+
+    const socket = new WebSocket(
+        'ws://' + window.location.host + '/ws/round/' + round_id + '/'
+    );
+
+    // --- Quand l'host clique sur le bouton ---
+    document.getElementById('nextRoundButton').addEventListener('click', function() {
+        if (!player_id) {
+            alert("Erreur : player_id manquant");
+            return;
+        }
+        socket.send(JSON.stringify({
+            'type': 'next_round',
+            'player_id': player_id
+        }));
+    });
+
+    // --- Quand le serveur notifie un nouveau tour ---
+    socket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+
+        if (data.type === 'new_round_started') {
+            if (data.host_player_id == player_id) {
+                // Host => va écrire une nouvelle affirmation
+                window.location.href = `/game/${game_code}/statement/?player_id=${player_id}`;
+            } else {
+                // Invités => écran d'attente
+                window.location.href = `/game/${game_code}/waiting/?player_id=${player_id}`;
+            }
+        }
+    };
+
+    socket.onclose = function(event) {
+        console.error('WebSocket closed unexpectedly');
+    };
+</script>
 {% endblock %}

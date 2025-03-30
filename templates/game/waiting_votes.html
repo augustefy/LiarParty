@@ -7,4 +7,34 @@
         <div class="animate-bounce text-3xl">🍻</div>
     </div>
 </div>
+
+<script>
+    // Récupération du code de la partie et de l'ID du joueur
+    const urlParams = new URLSearchParams(window.location.search);
+    const player_id = urlParams.get('player_id');
+    const pathParts = window.location.pathname.split('/');
+    const game_code = pathParts[2]; // récupère le code de la partie dans /game/<code>/
+    const round_id = pathParts[4];  // récupère l'id du round dans /round/<round_id>/
+
+    // Connexion au WebSocket pour le round spécifique
+    const socket = new WebSocket(
+        'ws://' + window.location.host + '/ws/round/' + round_id + '/'
+    );
+
+    socket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+
+        if (data.type === 'votes_updated') {
+            if (!player_id) {
+                alert("Erreur : player_id manquant");
+                return;
+            }
+            window.location.href = `/game/${game_code}/round/${round_id}/result/?player_id=${player_id}`;
+        }
+    };
+
+    socket.onclose = function(event) {
+        console.error('WebSocket closed unexpectedly');
+    };
+</script>
 {% endblock %}

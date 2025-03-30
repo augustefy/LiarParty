@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91112c70-60bf-4c4c-9563-15d4c683bbe0" name="Changes" comment=":zap: part of statement commit and round association is finished, web socket quiet hard to manipulate" />
+    <list default="true" id="91112c70-60bf-4c4c-9563-15d4c683bbe0" name="Changes" comment=":zap: part of statement commit and round association is finished, web socket quiet hard to manipulate">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/consumers.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/consumers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/routing.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/routing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/game/waiting_votes.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/game/waiting_votes.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -113,7 +120,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743324124409</updated>
-      <workItem from="1743324125429" duration="25415000" />
+      <workItem from="1743324125429" duration="27930000" />
     </task>
     <task id="LOCAL-00001" summary="🙈 init gitignore">
       <option name="closed" value="true" />
@@ -155,7 +162,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743357691813</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=":zap: part of statement commit and round association is finished, web socket quiet hard to manipulate">
+      <option name="closed" value="true" />
+      <created>1743357700319</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1743357700319</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
