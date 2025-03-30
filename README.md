@@ -32,11 +32,9 @@ Si la majorité a raison, c'est l'auteur qui trinque !
 
 - Python 3.12+
 - Django 5.x
-- TailwindCSS (ou Bootstrap selon préférence)
-- PostgreSQL (prod)
-- SQLite (dev)
-- Whitenoise (pour servir les fichiers statiques)
-- Render.com (déploiement recommandé)
+- TailwindCSS
+- SQLite 
+- Render.com (comme idée de deploiment )
 
 ---
 
@@ -46,3 +44,38 @@ Si la majorité a raison, c'est l'auteur qui trinque !
 ```bash
 git clone https://github.com/ton-pseudo/LiarParty.git
 cd LiarParty
+```
+
+### 2. Créer et activer un environnement virtuel
+```bash
+python3 -m venv .venv
+source .venv/bin/activate  # Mac/Linux
+# .venv\Scripts\activate   # Windows
+```
+
+### 3. Installer les dépendances
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Migrer la base de données
+```bash
+python manage.py migrate
+```
+
+### 5. Collecter les fichiers statiques
+```bash
+python manage.py collectstatic --noinput
+````
+
+
+### 6. Lancer le serveur en local (avec Daphne, OBLIGATOIRE pour websockets)
+```bash
+daphne PartyLiar.asgi:application
+```
+
+#### Le jeu sera accessible ici :
+#### ➡️ http://127.0.0.1:8000/
+
+
+
