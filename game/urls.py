@@ -9,4 +9,5 @@ urlpatterns = [
     path('game/<str:code>/statement/', views.submit_statement, name='submit_statement'),
     path('game/<str:code>/round/<int:round_id>/vote/', views.vote, name='vote'),
     path('game/<str:code>/round/<int:round_id>/result/', views.round_result, name='round_result'),
+    path("game/<str:code>/waiting/", views.waiting_statement, name="waiting_statement"),
 ]

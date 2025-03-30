@@ -42,7 +42,7 @@ class Round(models.Model):
     statement_text = models.TextField()
     is_true = models.BooleanField()
     is_finished = models.BooleanField(default=False)
-
+    created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"Round {self.id} - {self.author.pseudo}"
 

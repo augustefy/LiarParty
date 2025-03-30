@@ -18,19 +18,20 @@
         <ul id="players-list" class="space-y-2">
             {% for player in players %}
                 <li class="bg-emerald-50 p-2 rounded-xl shadow-sm text-center">
-                    {{ player.pseudo }}
-                    {% if player.id == game.host.id %}
+                    {{ player.pseudo }} {% if player.id == game.host.id %}
                         <span class="text-sm text-emerald-600">(Hôte)</span>
                     {% endif %}
                 </li>
             {% endfor %}
         </ul>
 
-        <!-- Bouton ou message -->
+        <!-- Formulaire -->
         {% if player_id == game.host.id %}
-            <form method="post" action="{% url 'start_game' code=game.code %}" class="pt-4">
+            <form method="post" action="{% url 'start_game' code=game.code %}?player_id={{ player_id }}" class="pt-4">
                 {% csrf_token %}
-                <button type="submit" class="w-full bg-emerald-600 text-white py-2 rounded-xl hover:bg-emerald-700 transition">Démarrer la partie</button>
+                <button type="submit" class="w-full bg-emerald-600 text-white py-2 rounded-xl hover:bg-emerald-700 transition">
+                    Démarrer la partie
+                </button>
             </form>
         {% else %}
             <p class="text-center text-gray-600 pt-4">En attente que l'hôte démarre la partie...</p>
@@ -39,7 +40,7 @@
     </div>
 </div>
 
-<!-- WS -->
+<!-- WebSocket -->
 <script>
     const socket = new WebSocket(
         'ws://' + window.location.host + '/ws/lobby/{{ game.code }}/'
@@ -47,6 +48,7 @@
 
     socket.onmessage = function(e) {
         const data = JSON.parse(e.data);
+
         if (data.action === "player_update") {
             const ul = document.getElementById('players-list');
             ul.innerHTML = '';
@@ -57,8 +59,13 @@
                 ul.appendChild(li);
             });
         }
+
         if (data.action === "game_started") {
-            window.location.href = "{% url 'submit_statement' code=game.code %}";
+            if ({{ player_id }} === {{ game.host.id }}) {
+                window.location.href = "{% url 'submit_statement' code=game.code %}?player_id={{ player_id }}";
+            } else {
+                window.location.href = "{% url 'waiting_statement' code=game.code %}?player_id={{ player_id }}";
+            }
         }
     };
 </script>
