@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-emerald-200">
+    <div class="bg-white p-8 rounded-2xl shadow-lg w-96 text-center space-y-4">
+        <h2 class="text-2xl font-bold">Résultat</h2>
+        <p class="bg-gray-100 rounded p-3">Le bluff était : 
+            <span class="font-semibold">{{ round.is_true|yesno:"VRAI,FAUX" }}</span>
+        </p>
+        <p>Votes vrai : <strong>{{ true_votes }}</strong> | Votes faux : <strong>{{ false_votes }}</strong></p>
+
+        {% if success %}
+            <p class="text-green-600 font-semibold">La majorité s'est trompée !</p>
+        {% else %}
+            <p class="text-red-600 font-semibold">La majorité a deviné correctement !</p>
+        {% endif %}
+
+        <a href="{% url 'submit_statement' game.code %}" 
+           class="inline-block bg-emerald-600 text-white px-4 py-2 rounded-xl hover:bg-emerald-700 transition">Tour suivant</a>
+    </div>
+</div>
+{% endblock %}

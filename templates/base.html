@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Liar Party{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-indigo-600 text-white p-4 shadow-md">
+        <div class="flex justify-between items-center max-w-5xl mx-auto">
+
+            <!-- Logo + Title -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg">
+                    🤥
+                </div>
+                <span class="text-2xl font-semibold tracking-wide">Liar Party</span>
+            </div>
+
+            <!-- Burger -->
+            <div class="md:hidden">
+                <button id="menu-toggle" class="focus:outline-none text-2xl">☰</button>
+            </div>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex space-x-6 text-sm items-center">
+                <a href="{% url 'create_game' %}" class="hover:underline">Créer</a>
+                <a href="{% url 'join_game' %}" class="hover:underline">Rejoindre</a>
+            </nav>
+        </div>
+
+        <!-- Mobile Menu -->
+        <nav id="mobile-menu" class="hidden flex-col space-y-2 mt-4 md:hidden text-sm">
+            <a href="{% url 'create_game' %}" class="hover:underline block">Créer</a>
+            <a href="{% url 'join_game' %}" class="hover:underline block">Rejoindre</a>
+        </nav>
+    </header>
+
+    <!-- Content -->
+    <main class="flex-1 p-4 max-w-5xl mx-auto">
+        {% if messages %}
+            <ul class="mb-4 space-y-2">
+                {% for message in messages %}
+                    <li class="p-2 rounded bg-yellow-100 border">{{ message|capfirst }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="p-4 bg-gray-200 text-center text-sm text-gray-600">
+        © 2025 - Liar Party | Fait avec 🍻 & Django
+    </footer>
+
+    <!-- Simple Toggle Script -->
+    <script>
+        const toggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('mobile-menu');
+        toggle.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-96">
+        <h2 class="text-2xl font-bold mb-4 text-center">Créer une partie</h2>
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-xl hover:bg-indigo-700 transition">Créer</button>
+        </form>
+        <div class="mt-4 text-center">
+            <a href="{% url 'join_game' %}" class="text-indigo-500 hover:underline">Rejoindre une partie</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
